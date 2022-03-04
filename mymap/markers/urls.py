@@ -1,11 +1,10 @@
-"""Markers urls."""
+"""mymap URL Configuration."""
 
-from django.urls import path
-
-from markers.views import MarkersMapView
-
-app_name = "markers"
+from django.contrib import admin
+from django.urls import include, path
 
 urlpatterns = [
-    path("map/", MarkersMapView.as_view()),
+    path("admin/", admin.site.urls),
+    path("api/", include("markers.api")),
+    path("markers/", include("markers.urls")),
 ]
