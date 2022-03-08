@@ -11,6 +11,20 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+# this was a bug, indicate to the system where the gdal is. Ok now
+if os.name == 'nt':
+    import platform
+    OSGEO4W = r"C:\OSGeo4W"
+    if '64' in platform.architecture()[0]:
+        OSGEO4W += "64"
+    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
+    os.environ['OSGEO4W_ROOT'] = OSGEO4W
+    os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
+    os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
+    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!y29s-*=v11k(r6g9&14nqf^6&771+r$cbcwgkq^#jlr84z17c'
+SECRET_KEY = 'django-insecure-m#q-ev%$vkg3gtybxsbymmwtax(v&%9&@-c6^jh2mjn0+^2xg3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,16 +45,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "django.contrib.gis",
-    "rest_framework",
-    "rest_framework_gis",
-    "markers",
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.gis',
+    'markers',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +143,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# GDAL PATH
-GEOS_LIBRARY_PATH = 'C:\\OSGeo4W64\\bin\\geos_c.dll'
-GDAL_LIBRARY_PATH = 'C:\\OSGeo4W64\\bin\\gdal204.dll'

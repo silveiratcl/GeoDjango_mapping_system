@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 # Create your views here.
-
 """Markers view."""
 
 from django.views.generic.base import TemplateView
