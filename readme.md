@@ -8,65 +8,66 @@ The start point was this post [post](https://www.paulox.net/2021/07/19/maps-with
 ### Install Python
 Here we used Python 3.10.2.
 
----python
+```python
 
 $ python --version
 Python 3.10.2
 
----
+```
 ### Creating Python virtual env
 
----python
+```python
 
 $ python -m venv ~/.mymap
 $$ source ~/.mymap/bin/activate
 
----
+```
 
 ### Installing latest stable version of Django (tested with Django 3.1-3.2)
 
----python
+```python
 
 $ python -m pip install django~=3.2
 
----
+```
 
 ### Creating `mymap` project
 
 To create the mymap project I switch to my projects directory:
 
----python
+```python
 
 $ cd ~/projects
 
----
+```
 
 and then use the `startproject` Django command:
 
----python
+```python
 
 $ python -m django startproject mymap
 
----
+```
 
 After this command will be created a new directory named `mymap` with the standard files to start the app development.
 
 ### Creating markers app
 
-Starting to navigate to `mymap` directory
----python
+Navigate to `mymap` directory
+
+```python
 
 $ cd mymap
 
----
+```
 
 Start the django app with the command:
 
----python 
+```python 
 
 $ python3 -m django startapp markers
 
----
+```
 
 ### Activating markers app
 
@@ -74,7 +75,7 @@ The activation of markers application is done by inserting its name in the list 
 
 `mymap/mymap/settings.py`
 
----python
+```python
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -86,7 +87,7 @@ INSTALLED_APPS = [
     "markers",
 ]
 
----
+```
 ## Creating an empty web map
 
 ### Adding a template view
@@ -95,7 +96,7 @@ Insert in the `views.py` file, a new `TemplateView` for the page of our map.
 
 `mymap/markers/views.py`
 
----python
+```python
 
 """Markers view."""
 
@@ -107,21 +108,21 @@ class MarkersMapView(TemplateView):
 
     template_name = "map.html"
 
----
+```
 
 ### Creating the map template
 
----python
+```python
 
 $ mkdir templates
 
----
+```
 
 In the ‘markers’ templates directory we can now create a map.html template file for our map. For now we added only the usual boilerplate with a title but without a body content.
 
 `mymap/markers/templates/map.html`
 
----html
+```html
 
 <!DOCTYPE html>
 <html lang="en">
@@ -134,10 +135,9 @@ In the ‘markers’ templates directory we can now create a map.html template f
   </body>
 </html>
 
----
+``` 
 
 ### Adding markers urls
-
 ### updating  myma urls
 ### testing blank map on server
 ### updatign map template
