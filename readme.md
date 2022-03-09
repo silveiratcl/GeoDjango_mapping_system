@@ -6,23 +6,23 @@ The start point was this post [post](https://www.paulox.net/2021/07/19/maps-with
 
 ### Starting the project
  python
- python virtual env
- django
- creating mymap proj
- creating markers app
- activating markers app
- empty web map
- map template
- markers urls
- updating  myma urls
- testing blank map on server
- uodatign map template
- static dir
- map css
- map js
- test on server
- instal gdal
- activate geodjango
+ - python virtual env
+ - django
+ - creating mymap proj
+ - creating markers app
+ - activating markers app
+ - empty web map
+ - map template
+ - markers urls
+ - updating  myma urls
+ - testing blank map on server
+ - updatign map template
+ - static dir
+ - map css
+ - map js
+ - test on server
+ - instal gdal
+ - activate geodjango
 
 
 ### Installing PostgresSQL windows 10
@@ -45,7 +45,7 @@ Go to docker homepage and choose the version according your OS.  Then you double
 
 Just to ilustrate, it showed bellow the easiest way of running a clean Postgres database is by running this command in a terminal window (after Docker has been installed):
 
-```linux
+```
 
 $ run --name postgres-db -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 
@@ -79,6 +79,7 @@ services:
         # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`.
         # You don't need to create the `db-data` folder. Docker Compose will do it for you.
         - ./db-data/:/var/lib/postgresql/data/
+
 ---
 
 To start the container creation run the following command. The container will be created, aldo a folder will be create inside the docker folder. Don't forget to turn on docker desktop. After while you will see in your docker desktop the container just created
