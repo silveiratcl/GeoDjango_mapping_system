@@ -187,7 +187,7 @@ After knowing how to creae a PostgresSQL database in command line, it is a bette
 
 `mymap/docker/docker-compose.yml`
 
----javascript
+```javascript
 version: "3"
 services:
     database: 
@@ -205,7 +205,7 @@ services:
         # You don't need to create the *db-data* folder. Docker Compose will do it for you.
         - ./db-data/:/var/lib/postgresql/data/
 
----
+```
 
 To start the container creation run the following command. The container will be created, aldo a folder will be create inside the docker folder. Don't forget to turn on docker desktop. After while you will see in your docker desktop the container just created
 
@@ -280,7 +280,7 @@ We’re going to use additional packages for our advanced map: Django filter, Dj
 
 `mymap/requirements.txt`
 
----python
+```python
 
 django-filter~=21.1
 djangorestframework-gis~=0.17
@@ -288,7 +288,7 @@ djangorestframework~=3.12.0
 django~=3.2.0
 psycopg2-binary~=2.9.0
 
----
+```
 ### Installing the requirements
 
 We install all the Python requirements, using the python package installer module.
@@ -328,7 +328,7 @@ obs: customize here to insert others fields concerning the monitoring at rebio
 
 `mymap/markers/serializers.py`
 
----python
+```python
 
 """Markers serializers."""
 
@@ -347,11 +347,11 @@ class MarkerSerializer(serializers.GeoFeatureModelSerializer):
         geo_field = "location"
         model = Marker
 
----
+```
 
 The `GeoFeatureModelSerializer serializer` will generate a GeoJSON like this:
 
----json
+```json
 
 {
     "type": "FeatureCollection",
@@ -370,7 +370,7 @@ The `GeoFeatureModelSerializer serializer` will generate a GeoJSON like this:
     ]
 }
 
---- 
+``` 
 ### Adding a Marker viewset
 
 Our intention is to expose our markers via a RESTful API and to do so we define a read-only viewset.
@@ -379,7 +379,7 @@ Our intention is to expose our markers via a RESTful API and to do so we define 
 
 `mymap/markers/viewsets.py`
 
----python
+```python
 
 """Markers API views."""
 from rest_framework import viewsets
@@ -397,7 +397,7 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Marker.objects.all()
     serializer_class = MarkerSerializer
 
----
+```
 
 ### Adding API ‘markers’ urls
 
@@ -405,7 +405,7 @@ In the `markers` application, we define the URL of our new endpoint using the Dj
 
 `mymap/markers/api.py`
 
----python
+```python
 
 """Markers API URL Configuration."""
 
@@ -418,7 +418,7 @@ router.register(r"markers", MarkerViewSet)
 
 urlpatterns = router.urls
 
----
+```
 
 ### Updating ‘mymap’ urls
 
@@ -448,7 +448,7 @@ Here we configure the `leaflet` methods which will run in our app. One of those 
 
 `mymap/markers/static/map.js`
 
----javascript
+```javascript
 
 const copy = "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors";
 const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -461,7 +461,7 @@ map.
 
 /*continue*/
 
---- 
+``` 
 
 ### Rendering markers incrementally
 
@@ -471,9 +471,9 @@ We invoke this flow, every time the user stops moving on the map.
 
 ´mymap/markers/static/map.js´
 
----javascript
+```javascript
 
-/*continuation*/
+/*js continuation*/
 
 
 async function load_markers() {
@@ -492,7 +492,7 @@ async function render_markers() {
 
 map.on("moveend", render_markers);
 
----
+```
 
 ### Testing the populated map
 
@@ -503,11 +503,15 @@ The loading takes place in a very fluid way, because the number of calls occurs 
 
 You can test the populated web map running this command:
 
----python
+```python
 
 $ python manage.py runserver
 
----
+```
+
+todo: 
+print screens
+
 
 
 
@@ -517,7 +521,7 @@ $ python manage.py runserver
 
 ## Usefull Resourcers
 1. [Docker compose](https://dev.to/andre347/how-to-easily-create-a-postgres-database-in-docker-4moj) 
-2.[Docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/) 
+2.  [Docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/) 
 3.  [Creating PostgresSQL container via yml file docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/)
 4. [Setting path to GDAL](https://newbedev.com/geodjango-on-windows-try-setting-gdal-library-path-in-your-settings)
 
