@@ -4,25 +4,150 @@ Here I developed a webmap system to record locations/data to be used as a tool i
 
 The start point was this post [post](https://www.paulox.net/2021/07/19/maps-with-django-part-2-geodjango-postgis-and-leaflet/#abstract) from [Paolo Melchiorre](https://github.com/pauloxnet). Some customization where done in onder do adequate my system needs, in this case windows 11. This is a working in progress...
 
-### Starting the project
- python
- - python virtual env
- - django
- - creating mymap proj
- - creating markers app
- - activating markers app
- - empty web map
- - map template
- - markers urls
- - updating  myma urls
- - testing blank map on server
- - updatign map template
- - static dir
- - map css
- - map js
- - test on server
- - instal gdal
- - activate geodjango
+## Starting the project
+### Install Python
+Here we used Python 3.10.2.
+
+---python
+
+$ python --version
+Python 3.10.2
+
+---
+### Creating Python virtual env
+
+---python
+
+$ python -m venv ~/.mymap
+$$ source ~/.mymap/bin/activate
+
+---
+
+### Installing latest stable version of Django (tested with Django 3.1-3.2)
+
+---python
+
+$ python -m pip install django~=3.2
+
+---
+
+### Creating `mymap` project
+
+To create the mymap project I switch to my projects directory:
+
+---python
+
+$ cd ~/projects
+
+---
+
+and then use the `startproject` Django command:
+
+---python
+
+$ python -m django startproject mymap
+
+---
+
+After this command will be created a new directory named `mymap` with the standard files to start the app development.
+
+### Creating markers app
+
+Starting to navigate to `mymap` directory
+---python
+
+$ cd mymap
+
+---
+
+Start the django app with the command:
+
+---python 
+
+$ python3 -m django startapp markers
+
+---
+
+### Activating markers app
+
+The activation of markers application is done by inserting its name in the list of the INSTALLED_APPS in the mymap settings file.
+
+`mymap/mymap/settings.py`
+
+---python
+
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "markers",
+]
+
+---
+## Creating an empty web map
+
+### Adding a template view
+
+Insert in the `views.py` file, a new `TemplateView` for the page of our map.
+
+`mymap/markers/views.py`
+
+---python
+
+"""Markers view."""
+
+from django.views.generic.base import TemplateView
+
+
+class MarkersMapView(TemplateView):
+    """Markers map view."""
+
+    template_name = "map.html"
+
+---
+
+### Creating the map template
+
+---python
+
+$ mkdir templates
+
+---
+
+In the ‘markers’ templates directory we can now create a map.html template file for our map. For now we added only the usual boilerplate with a title but without a body content.
+
+`mymap/markers/templates/map.html`
+
+---html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Markers Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+
+  </body>
+</html>
+
+---
+
+### Adding markers urls
+
+### updating  myma urls
+### testing blank map on server
+### updatign map template
+### static dir
+### map css
+### map js
+### test on server
+### instal gdal
+### activate geodjango
+
 
 
 ### Installing PostgresSQL windows 10
@@ -62,7 +187,7 @@ After knowing how to creae a PostgresSQL database in command line, it is a bette
 
 `mymap/docker/docker-compose.yml`
 
----
+---javascript
 version: "3"
 services:
     database: 
@@ -74,17 +199,17 @@ services:
       POSTGRES_PASSWORD: docker # The PostgreSQL password (useful to connect to the database)
       POSTGRES_DB: default_database # The PostgreSQL default database (automatically created at first launch)
     volumes:
-        # In this example, we share the folder `db-data` in our root repository, with the default PostgreSQL data path.
+        # In this example, we share the folder *db-data* in our root repository, with the default PostgreSQL data path.
         # It means that every time the repository is modifying the data inside
-        # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`.
-        # You don't need to create the `db-data` folder. Docker Compose will do it for you.
+        # of `/var/lib/postgresql/data/`, automatically the change will appear in *db-data*.
+        # You don't need to create the *db-data* folder. Docker Compose will do it for you.
         - ./db-data/:/var/lib/postgresql/data/
 
 ---
 
 To start the container creation run the following command. The container will be created, aldo a folder will be create inside the docker folder. Don't forget to turn on docker desktop. After while you will see in your docker desktop the container just created
 
-```docker
+```
 $ cd docker
 $ docker-compose up
 
@@ -92,12 +217,11 @@ $ docker-compose up
 
 When you finish working on your project, I recommend you to stop the running Postgres Docker container using the command below:
 
-```docker
+```
 
 $ docker-compose down
 
 ```
-
 ### Connect the Postgres DB to the app
 
 Now the next step is to connect to this brand new Postgres database to communicate with database **mymap** app. We modify the project database settings, adding the PostGIS engine and the connection parameters of our PostgreSQL database, which you may have locally or remotely. You need to use the following connection details to actually connect to the DB on settings file:
