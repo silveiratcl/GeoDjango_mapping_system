@@ -49,7 +49,7 @@ $ python -m django startproject mymap
 
 ```
 
-After this command will be created a new directory named `mymap` with the standard files to start the app development.
+After run this command will be created a new directory named `mymap` with the standard files to start the app development.
 
 ### Creating markers app
 
@@ -118,7 +118,7 @@ $ mkdir templates
 
 ```
 
-In the ‘markers’ templates directory we can now create a map.html template file for our map. For now we added only the usual boilerplate with a title but without a body content.
+In the *markers* template directory we can now create a map.html template file for our map. For now we added only title but without a body content.
 
 `mymap/markers/templates/map.html`
 
@@ -138,18 +138,170 @@ In the ‘markers’ templates directory we can now create a map.html template f
 ``` 
 
 ### Adding markers urls
+
+In the markers URL file we must now add the path to view our map, using its template view.
+
+`mymap/markers/urls.py`
+
+```python
+
+"""Markers urls."""
+
+from django.urls import path
+
+from markers.views import MarkersMapView
+
+app_name = "markers"
+
+urlpatterns = [
+    path("map/", MarkersMapView.as_view()),
+]
+
+
+```
+
 ### updating  myma urls
-### testing blank map on server
-### updatign map template
-### static dir
-### map css
-### map js
-### test on server
-### instal gdal
-### activate geodjango
+
+In this step we must include the URL file on the *marker* app. See [Django documents](https://docs.djangoproject.com/en/4.0/ref/urls/) about urls path. Creating url inside `mymap/mymap` just made a first view in Django, but it will show a blank page.
+
+`mymap/mymap/urls.py`
+
+```python
+
+"""mymap URL Configuration."""
+
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("markers/", include("markers.urls")),
+]
+
+```
+### Testing blank map on server
+
+In order to test the blank map page you should start a python server:
+
+```python
+
+$ python manage.py runserver
+
+```
+Now that the server’s running, visit http://127.0.0.1:8000/markers/map/ with your Web browser. You’ll see a working blank map page.
+
+## Leaflet
+### Why [Leafleat](https://leafletjs.com/)
++ The most used javascript library for web maps apps
++ Free software
++ Friendly for desktop and mobile
++ Very ligth (~39 kb of gzippes JS)
++ Well documented
+### Updatign map template HTML/CSS/JS
+### HTML
+
+We need some updates in HTML to prepare it to display the map in th app.
+Basically, were inserted:
++ link to CSS
++ link Leafleat CSS
++ Sourcing to Leafleat JS
++ A DIV in the body, with the ID *map*  
+
+```html
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Markers Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}" />
+    <link rel="stylesheet" type="text/css" href="https:///unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https:///unpkg.com/leaflet/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="{% static 'map.js' %}"></script>
+  </body>
+</html>
+
+```
+### Creating static diretory
+
+We must create a new directory to store the CSS ans JS files linked to HTML
+
+```python
+
+$ mkdir static
+
+```
+
+### Map CSS
+
+Add the folowing CSS file to static folder:
+
+`mymap/markers/static/map.css`
+
+```css
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+#map {
+    height: 100%;
+    width: 100%;
+}
 
 
+```
+### Map JavaScript
 
+`mymap/markers/static/map.js`
+
+```javascript
+
+const copy = "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors";
+const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const osm = L.tileLayer(url, { attribution: copy });
+const map = L.map("map", { layers: [osm] });
+map.fitWorld();
+
+```
+
+### Test it on server
+
+At this point the django project can be tested with the ‘runserver’
+
+```python
+
+$ python manage.py runserver
+
+```
+
+
+### Install GDAL
+
+Check the [Django documentation](https://docs.djangoproject.com/en/4.0/ref/contrib/gis/install/) to set GDAL in your machine. There are some different process according your OS (mac, windows and linux).
+### Activate geodjango
+
+The GeoDjango activation is done by adding the django.contrib.gis module to the INSTALLED_APPS, in our project `settings.py` file.
+
+```python
+
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.gis",
+    "markers",
+]
+
+```
 ### Installing PostgresSQL windows 10
 
 Download the latest PostgreSQL 12.x installer from the EnterpriseDB website. After downloading, run the installer, follow the on-screen directions, and keep the default options unless you know the consequences of changing them.
@@ -496,9 +648,6 @@ map.on("moveend", render_markers);
 
 ### Testing the populated map
 
-And finally here is our complete map.
-In this example, we can see how the markers in a specific map area look.
-
 The loading takes place in a very fluid way, because the number of calls occurs only when the movement on the map stops and therefore the data traffic is reduced to the essentials as well as the rendering of the markers carried out by Leaflet.
 
 You can test the populated web map running this command:
@@ -509,18 +658,8 @@ $ python manage.py runserver
 
 ```
 
-todo: 
-print screens
-
-
-
-
-
-
-
-
 ## Usefull Resourcers
-1. [Docker compose](https://dev.to/andre347/how-to-easily-create-a-postgres-database-in-docker-4moj) 
+1.  [Docker compose](https://dev.to/andre347/how-to-easily-create-a-postgres-database-in-docker-4moj) 
 2.  [Docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/) 
 3.  [Creating PostgresSQL container via yml file docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/)
 4. [Setting path to GDAL](https://newbedev.com/geodjango-on-windows-try-setting-gdal-library-path-in-your-settings)
