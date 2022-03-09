@@ -322,7 +322,7 @@ Go to docker homepage and choose the version according your OS.  Then you double
 
 Just to ilustrate, it showed bellow the easiest way of running a clean Postgres database is by running this command in a terminal window (after Docker has been installed):
 
-```
+```python
 
 $ run --name postgres-db -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 
@@ -339,7 +339,7 @@ After knowing how to creae a PostgresSQL database in command line, it is a bette
 
 `mymap/docker/docker-compose.yml`
 
-```javascript
+```python
 version: "3"
 services:
     database: 
@@ -361,7 +361,7 @@ services:
 
 To start the container creation run the following command. The container will be created, aldo a folder will be create inside the docker folder. Don't forget to turn on docker desktop. After while you will see in your docker desktop the container just created
 
-```
+```python 
 $ cd docker
 $ docker-compose up
 
@@ -369,7 +369,7 @@ $ docker-compose up
 
 When you finish working on your project, I recommend you to stop the running Postgres Docker container using the command below:
 
-```
+```python
 
 $ docker-compose down
 
@@ -659,10 +659,13 @@ $ python manage.py runserver
 ```
 
 ## Usefull Resourcers
-1.  [Docker compose](https://dev.to/andre347/how-to-easily-create-a-postgres-database-in-docker-4moj) 
-2.  [Docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/) 
-3.  [Creating PostgresSQL container via yml file docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/)
-4. [Setting path to GDAL](https://newbedev.com/geodjango-on-windows-try-setting-gdal-library-path-in-your-settings)
++ [GeoDjango](https://docs.djangoproject.com/en/4.0/ref/contrib/gis/)
++ [LeaFleat](https://leafletjs.com/)
++ [PostgresSQL](https://www.postgresql.org/)
++ [Docker compose](https://dev.to/andre347/how-to-easily-create-a-postgres-database-in-docker-4moj) 
++ [Docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/) 
++ [Creating PostgresSQL container via yml file docker compose](https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/)
++ [Setting path to GDAL](https://newbedev.com/geodjango-on-windows-try-setting-gdal-library-path-in-your-settings)
 
 
 
