@@ -1,4 +1,4 @@
-# Creating a web map system to record spatial data using Python, Django, Leaflet, Docker and PostgresSQL 
+# Mapping system to record spatial data using Python, Django, Leaflet, Docker and PostgresSQL 
 
 Here I developed a webmap system to record locations/data to be used as a tool in the Sun Coral monitoring program at REBIO Arvoredo. The technology used is a Django Restful Framework (with Geodjango extension), Imagery from Leafleat Javascript Library and PostgresSQL db runing with Docker. 
 
